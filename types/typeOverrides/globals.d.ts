@@ -12,5 +12,3 @@ declare global {
     role?: UserRole;
   }
 }
-
-declare module "*.css";
