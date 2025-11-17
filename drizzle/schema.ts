@@ -1,1 +1,9 @@
-export * as schema from "./schema";
+export * from "./schema/course";
+export * from "./schema/product";
+export * from "./schema/courseProduct";
+export * from "./schema/courseSection";
+export * from "./schema/Lession-Schema";
+export * from "./schema/user";
+export * from "./schema/userLessionComplete";
+export * from "./schema/userCourseAccess";
+export * from "./schema/purchase";
