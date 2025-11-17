@@ -9,10 +9,10 @@ export const CourseProductTable = pgTable(
   {
     courseId: uuid()
       .notNull()
-      .references(() => CourseTable.id),
+      .references(() => CourseTable.id, { onDelete: "restrict" }),
     productId: uuid()
       .notNull()
-      .references(() => ProductTable.id),
+      .references(() => ProductTable.id, { onDelete: "cascade" }),
     createdAt,
     updatedAt,
   },
