@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
       case "user.created":
       case "user.updated": {
         const email = evt.data.email_addresses.find(
-          (e) => e.id == evt.data.primary_email_address_id
+          (e) => e.id === evt.data.primary_email_address_id
         )?.email_address;
         const name = `${evt.data.first_name} ${evt.data.last_name}`.trim();
 
