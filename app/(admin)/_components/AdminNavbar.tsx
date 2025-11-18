@@ -1,4 +1,5 @@
 "use client";
+
 import {
   SignInButton,
   SignUpButton,
@@ -17,7 +18,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 
-export default function Navbar() {
+export default function AdminNavbar() {
   return (
     <header className="w-full sticky z-50 top-0 left-0 border-b bg-background/95 py-4">
       <div className="px-4 sm:px-8 mx-auto flex items-center justify-between">
@@ -25,37 +26,44 @@ export default function Navbar() {
         <h1 className="text-2xl font-bold">Next LMS</h1>
 
         {/* Desktop Menu */}
-        <nav className="hidden md:flex items-center text-sm gap-6  font-medium">
+        <nav className="hidden md:flex items-center text-sm gap-6 font-medium">
           <Link href="/" className="hover:text-primary transition-colors">
             Home
           </Link>
           <Link
-            href="/courses"
+            href="/admin/products"
+            className="hover:text-primary transition-colors"
+          >
+            Products
+          </Link>
+
+          <Link
+            href="/admin/courses"
             className="hover:text-primary transition-colors"
           >
             Courses
           </Link>
-          <Link href="/about" className="hover:text-primary transition-colors">
-            About
+          <Link
+            href="/admin/sales"
+            className="hover:text-primary transition-colors"
+          >
+            Sales
           </Link>
         </nav>
 
         {/* Auth Buttons */}
         <div className="hidden md:flex items-center gap-4">
           <SignedOut>
-            <SignInButton mode="modal">
-              <Button className="cursor-pointer" variant="ghost">
-                Login
-              </Button>
-            </SignInButton>
-            <SignUpButton mode="modal">
-              <Button
-                variant={"default"}
-                className="text-black cursor-pointer bg-gray-100 rounded-full px-5"
-              >
-                Sign Up
-              </Button>
-            </SignUpButton>
+            <Button asChild className="cursor-pointer" variant="ghost">
+              <SignInButton>Login</SignInButton>
+            </Button>
+            <Button
+              variant={"default"}
+              className="text-black cursor-pointer bg-gray-100 rounded-full px-5"
+              asChild
+            >
+              <SignUpButton>Sign Up</SignUpButton>
+            </Button>
           </SignedOut>
           <SignedIn>
             <UserButton />
