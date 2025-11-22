@@ -1,5 +1,5 @@
 "use client";
-import { courseSectionStatuses, CourseSectionTable } from "@/drizzle/schema";
+import { CourseSectionStatus, courseSectionStatuses } from "@/drizzle/schema";
 import { Button } from "@/components/ui/button";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,7 +28,11 @@ import { createSection, updateSection } from "../actions/courseSections";
 
 type SectionFormProps = {
   courseId: string;
-  section?: CourseSectionTable & { id: string };
+  section?: {
+    id: string;
+    name: string;
+    status: CourseSectionStatus;
+  } & { id: string };
   onSuccess: () => void;
   onError: () => void;
 };
