@@ -6,13 +6,17 @@ import {
   DialogContent,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { CourseSectionTable } from "@/drizzle/schema";
 import { ReactNode, useState } from "react";
 import SectionForm from "./SectionForm";
+import { CourseSectionStatus } from "@/drizzle/schema";
 
 type SectionFormDialogProps = {
   courseId: string;
-  section?: CourseSectionTable;
+  section?: {
+    id: string;
+    name: string;
+    status: CourseSectionStatus;
+  };
   children: ReactNode;
 };
 

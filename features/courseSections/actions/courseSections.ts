@@ -10,6 +10,7 @@ import { getCurrentUser } from "@/services/clerk/clerk";
 import {
   updateSection as updateSectionDB,
   deleteSection as deleteSectionDB,
+  updateSectionOrders as updateSectionOrdersDB,
   createSection as createSectionDB,
   getNextCourseSectionOrder,
 } from "../db/courseSections";
@@ -77,6 +78,23 @@ export const updateSection = async (
   }
 };
 
+export const updateSectionOrders = async (sectionIds: string[]) => {
+  if (!canDeleteSection(await getCurrentUser()) || sectionIds.length === 0) {
+    return {
+      error: true,
+      message: "Error reordering sections",
+    };
+  }
+  try {
+    await updateSectionOrdersDB(sectionIds);
+    return { error: false, message: "section reorderd successfully" };
+  } catch {
+    return {
+      error: true,
+      message: "there was an error reordering section, database error",
+    };
+  }
+};
 export const deleteSection = async (sectionId: string) => {
   if (!canDeleteSection(await getCurrentUser())) {
     return {

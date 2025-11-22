@@ -7,10 +7,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CourseForm } from "@/features/courses/_components/CourseForm";
 import SectionFormDialog from "@/features/courseSections/components/SectionFormDialog";
-import { EyeClosedIcon, PlusIcon, Trash2Icon } from "lucide-react";
+import { EyeClosedIcon, PlusIcon } from "lucide-react";
+import SortableSectionList from "@/features/courseSections/components/SortableSectionList";
 import { cn } from "@/lib/utils";
-import ActionButton from "@/app/components/common/ActionButton";
-import { deleteSection } from "@/features/courseSections/actions/courseSections";
 async function CourseEditPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const course = await getCourseById(id);
@@ -24,7 +23,7 @@ async function CourseEditPage({ params }: { params: Promise<{ id: string }> }) {
             <TabsTrigger value="lessons">Lessons</TabsTrigger>
             <TabsTrigger value="details">Details</TabsTrigger>
           </TabsList>
-          <TabsContent value="lessons">
+          <TabsContent className="mt-5" value="lessons">
             <Card>
               <CardHeader>
                 <div className="flex justify-between items-center">
@@ -37,39 +36,44 @@ async function CourseEditPage({ params }: { params: Promise<{ id: string }> }) {
                 </div>
               </CardHeader>
               <CardContent className="mt-3 grid grid-cols-1 gap-y-10">
-                {course.sections.map((section) => {
-                  return (
-                    <div className="flex justify-between" key={section.id}>
-                      <div
-                        className={cn(
-                          "capitalize flex gap-3",
-                          section.status === "private"
-                            ? "text-gray-50/25"
-                            : null
-                        )}
-                      >
-                        {section.status === "private" && <EyeClosedIcon />}
-                        {section.name}
-                      </div>
-                      <div className="flex gap-4">
-                        <SectionFormDialog
-                          courseId={course.id}
-                          section={{ ...section, courseId: course.id }}
-                        >
-                          <Button>Edit</Button>
-                        </SectionFormDialog>
-                        <ActionButton
-                          requireAreYouSure={true}
-                          action={deleteSection.bind(null, section.id)}
-                        >
-                          <Trash2Icon />
-                        </ActionButton>
-                      </div>
-                    </div>
-                  );
-                })}
+                <SortableSectionList
+                  courseId={course.id}
+                  sections={course.sections}
+                />
               </CardContent>
             </Card>
+            <hr className="my-4" />
+            <div className="grid gap-5">
+              {course.sections.map((section) => {
+                return (
+                  <Card className="" key={section.id}>
+                    <CardHeader>
+                      <div className="flex justify-between items-center gap-4">
+                        <CardTitle>
+                          <div
+                            className={cn(
+                              "capitalize flex gap-3",
+                              section.status === "private"
+                                ? "text-gray-50/25"
+                                : null
+                            )}
+                          >
+                            {section.status === "private" && <EyeClosedIcon />}
+                            {section.name}
+                          </div>
+                        </CardTitle>
+                        <SectionFormDialog courseId={course.id}>
+                          <Button variant={"outline"}>
+                            <PlusIcon /> New Lesson
+                          </Button>
+                        </SectionFormDialog>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="mt-3 grid grid-cols-1 gap-y-10"></CardContent>
+                  </Card>
+                );
+              })}
+            </div>
           </TabsContent>
           <TabsContent value="details">
             <Card>
